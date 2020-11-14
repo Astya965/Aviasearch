@@ -1,0 +1,48 @@
+.settings {
+  position: relative;
+
+  background-color: @background-secondary;
+}
+
+.settings__toggle {
+  display: none;
+}
+
+.settings__inner {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 45px;
+  padding-left: 10px;
+
+  background-color: @background-main;
+}
+
+@media (max-width: @mobile-width) {
+  .settings__toggle {
+    position: absolute;
+
+    display: block;
+
+    background-color: transparent;
+    border: none;
+
+    cursor: pointer;
+  }
+
+  .settings__toggle:hover .settings__svg,
+  .settings__toggle:focus .settings__svg {
+    fill: @button-flight-hover;
+  }
+
+  .settings__toggle:active .settings__svg {
+    fill: @button-flight;
+    outline: none;
+  }
+
+  .settings__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

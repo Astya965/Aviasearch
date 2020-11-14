@@ -1,0 +1,42 @@
+.filters__title,
+.filter__title {
+  .setting-title();
+}
+
+.filters__list,
+.filter__list {
+  .list-style();
+}
+
+.filter__inner {
+  display: grid;
+  grid-template-columns: 10% 90%;
+}
+
+.filter__option {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter__label {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-grow: 2;
+
+  vertical-align: baseline;
+
+  cursor: pointer;
+}
+
+.filter__price {
+  margin: 0 3px;
+}
+
+.filter__input {
+  margin-bottom: 10px;
+  padding: 2px 2px;
+
+  cursor: pointer;
+}

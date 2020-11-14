@@ -1,0 +1,60 @@
+.flight {
+  margin-bottom: 20px;
+}
+
+.flight__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  color: @text-secondary;
+
+  background-color: @background-flight-header;
+}
+
+.flight__img {
+  margin-left: 10px;
+}
+
+.flight__price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 5px 10px;
+}
+
+.flight__total {
+  .paragraphs();
+  font-size: @text-size-big;
+}
+
+.flight__passengers {
+  .paragraphs();
+}
+
+.flight__button {
+  width: 100%;
+  padding: 10px 20px 8px;
+
+  color: @text-secondary;
+  font-size: @text-size-title;
+  text-align: center;
+  text-transform: uppercase;
+
+  background-color: @button-flight;
+  border: none;
+
+  cursor: pointer;
+}
+
+.flight__button:hover,
+.flight__button:focus {
+  background-color: @button-flight-hover;
+}
+
+.flight__button:active {
+  background-color: @button-flight-active;
+  outline: none;
+}
