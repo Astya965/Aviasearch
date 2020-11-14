@@ -36,9 +36,9 @@ export const ActionCreator = {
     payload: sort,
   }),
 
-  incrementOffset: () => ({
+  incrementOffset: (offset) => ({
     type: ActionType.INCREMENT_OFFSET,
-    payload: null,
+    payload: offset,
   }),
 
   setMaxPriceFilter: (maxPrice) => ({
@@ -61,7 +61,7 @@ export const reducer = (state = initialState, action) => {
       return {...state, offers: action.payload};
 
     case ActionType.INCREMENT_OFFSET:
-      return {...state, offset: state.offset + OFFSET};
+      return {...state, offset: state.offset + action.payload};
 
     case ActionType.SET_CURRENT_SORT:
       return {...state, currentSort: action.payload};
@@ -96,7 +96,7 @@ export const getOffest = (state) => {
   return state.offset;
 }
 
-const getFlights = (state) => {
+export const getFlights = (state) => {
   return state.flights;
 };
 
@@ -106,8 +106,7 @@ export const getCurrentFlights = createSelector(
   getOffest,
   getCurrentSort,
   getMaxPriceFilter,
-  getMinPriceFilter,
-  (flights, offset, currentSort, maxPrice, minPrice) => {
+  (flights, offset, currentSort, maxPrice) => {
 
     let result = flights.slice();
 

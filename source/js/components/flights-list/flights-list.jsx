@@ -5,7 +5,7 @@ import useSearch from "../../hooks/useSearch.js";
 
 const FlightsList = (props) => {
   const {flights} = props;
-  const {onMoreButtonClick} = useSearch();
+  const {offset, maxFlightsCount, onMoreButtonClick} = useSearch();
 
   return (
     <section className="main__flights flights">
@@ -16,7 +16,7 @@ const FlightsList = (props) => {
           );
         })}
       </ul>
-      <button className="flights__button" onClick={onMoreButtonClick}>Показать ещё</button>
+      {maxFlightsCount === offset ?  `` : <button className="flights__button" onClick={onMoreButtonClick}>Показать ещё</button>}
     </section>
   );
 };
