@@ -1,10 +1,9 @@
 import {createSelector} from "reselect";
-import {SortType} from "../utils/constants.js";
+import {SortType, OFFSET} from "../utils/constants.js";
 
 const initialState = {
   flights: [],
-  offers: null,
-  offset: 5,
+  offset: OFFSET,
   currentSort: SortType.TO_HIGH_PRICE,
   maxPriceFilter: null,
   minPriceFilter: null,
@@ -15,6 +14,7 @@ const initialState = {
 const ActionType = {
   LOAD_FLIGHTS: `LOAD_FLIGHTS`,
   LOAD_OFFERS: `LOAD_OFFERS`,
+  INCREMENT_OFFSET: `INCREMENT_OFFSET`,
   SET_CURRENT_SORT: `SET_CURRENT_SORT`,
   SET_MAX_PRICE_FILTER: `SET_MAX_PRICE_FILTER`,
   SET_MIN_PRICE_FILTER: `SET_MAX_PRICE_FILTER`,
@@ -36,6 +36,11 @@ export const ActionCreator = {
     payload: sort,
   }),
 
+  incrementOffset: () => ({
+    type: ActionType.INCREMENT_OFFSET,
+    payload: null,
+  }),
+
   setMaxPriceFilter: (maxPrice) => ({
     type: ActionType.SET_MAX_PRICE_FILTER,
     payload: maxPrice,
@@ -52,8 +57,11 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_FLIGHTS:
       return {...state, flights: action.payload};
 
-      case ActionType.LOAD_OFFERS:
-        return {...state, offers: action.payload};
+    case ActionType.LOAD_OFFERS:
+      return {...state, offers: action.payload};
+
+    case ActionType.INCREMENT_OFFSET:
+      return {...state, offset: state.offset + OFFSET};
 
     case ActionType.SET_CURRENT_SORT:
       return {...state, currentSort: action.payload};
@@ -84,7 +92,7 @@ export const getMinPriceFilter = (state) => {
   return state.minPriceFilter;
 };
 
-const getOffest = (state) => {
+export const getOffest = (state) => {
   return state.offset;
 }
 

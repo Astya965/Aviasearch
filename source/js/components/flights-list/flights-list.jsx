@@ -1,9 +1,11 @@
 import React from "react";
 
 import Flight from "../flight/flight.jsx";
+import useSearch from "../../hooks/useSearch.js";
 
 const FlightsList = (props) => {
   const {flights} = props;
+  const {onMoreButtonClick} = useSearch();
 
   return (
     <section className="main__flights flights">
@@ -14,7 +16,7 @@ const FlightsList = (props) => {
           );
         })}
       </ul>
-      <button className="flights__button">Показать ещё</button>
+      <button className="flights__button" onClick={onMoreButtonClick}>Показать ещё</button>
     </section>
   );
 };

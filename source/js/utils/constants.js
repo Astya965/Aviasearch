@@ -1,3 +1,5 @@
+export const OFFSET = 4;
+
 export const SortType = {
   TO_HIGH_PRICE: `to-high`,
   TO_LOW_PRICE: `to-low`,
