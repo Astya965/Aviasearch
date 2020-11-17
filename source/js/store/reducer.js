@@ -17,7 +17,7 @@ const ActionType = {
   INCREMENT_OFFSET: `INCREMENT_OFFSET`,
   SET_CURRENT_SORT: `SET_CURRENT_SORT`,
   SET_MAX_PRICE_FILTER: `SET_MAX_PRICE_FILTER`,
-  SET_MIN_PRICE_FILTER: `SET_MAX_PRICE_FILTER`,
+  SET_MIN_PRICE_FILTER: `SET_MIX_PRICE_FILTER`,
 };
 
 export const ActionCreator = {
@@ -105,34 +105,35 @@ export const getCurrentFlights = createSelector(
   getFlights,
   getOffest,
   getCurrentSort,
+  getMinPriceFilter,
   getMaxPriceFilter,
-  (flights, offset, currentSort, maxPrice) => {
+  (flights, offset, currentSort, minPrice, maxPrice) => {
 
     let result = flights.slice();
 
-    if (maxPrice) {
+    if (minPrice > 0) {
       result = result.filter((item) => {
-        console.log(item.flight.price.total.amount)
-        console.log()
-        return item.flight.price.total.amount <= maxPrice;
-      })
+        return +item.flight.price.total.amount >= +minPrice;
+      });
+    }
+
+    if (maxPrice > 0) {
+      result = result.filter((item) => {
+        return +item.flight.price.total.amount <= +maxPrice;
+      });
     }
 
     switch (currentSort) {
       case SortType.TO_HIGH_PRICE:
-        return (
-          result.sort((a, b) => (a.flight.price.total.amount - b.flight.price.total.amount)).slice(0, offset)
-        );
+        result = result.sort((a, b) => (a.flight.price.total.amount - b.flight.price.total.amount));
+        break;
       case SortType.TO_LOW_PRICE:
-        return (
-          result.sort((a, b) => (b.flight.price.total.amount - a.flight.price.total.amount)).slice(0, offset)
-        )
+        result = result.sort((a, b) => (b.flight.price.total.amount - a.flight.price.total.amount));
+        break;
       case SortType.FLIGHT_DURATION:
-        return (
-          result.sort((a, b) => (
-            a.flight.legs.reduce((sum, leg) => {return sum + leg.duration}, 0) - b.flight.legs.reduce((sum, leg) => {return sum + leg.duration}, 0)))
-            .slice(0, offset)
-        );
+        result = result.sort((a, b) => (
+          a.flight.legs.reduce((sum, leg) => {return sum + leg.duration}, 0) - b.flight.legs.reduce((sum, leg) => {return sum + leg.duration}, 0)));
+        break;
     }
 
     return result.slice(0, offset);

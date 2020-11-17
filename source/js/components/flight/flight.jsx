@@ -3,10 +3,11 @@ import React from "react";
 import Leg from "../leg/leg.jsx";
 
 const Flight = (props) => {
-    const {carrier, price, services, legs} = props.flight;
+    const {flight} = props;
+    const {price, legs} = flight;
     const {total, passengerPrices} = price;
 
-    return (
+    return flight ? (
       <li className="flights__item flight">
 
         <header className="flight__header">
@@ -35,7 +36,7 @@ const Flight = (props) => {
         <button className="flight__button">Выбрать</button>
       </li>
 
-    );
+    ) : ``;
 };
 
 export default Flight;

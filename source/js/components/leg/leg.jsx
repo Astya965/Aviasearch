@@ -5,6 +5,7 @@ import {formatHoursMinutes, formatDayMonth, getDistanceFull} from "../../utils/d
 
 const Leg = (props) => {
   const {segments} = props.info;
+  console.log(segments);
 
   const departureDate = new Date(segments[0].departureDate);
   const arrivalDate = new Date(segments[segments.length - 1].arrivalDate);
@@ -15,10 +16,10 @@ const Leg = (props) => {
 
   const uniqCompamies = uniq(companies);
 
-  return (
+  return segments.length > 0 ? (
     <li className="legs__item leg">
       <div className="leg__route">
-        {segments[0].departureCity.caption}, {segments[0].departureAirport.caption}
+        {segments[0].departureCity ? segments[0].departureCity.caption : ``}, {segments[0].departureAirport.caption}
         <span className="leg__aeroportID">
           ({segments[0].departureAirport.uid})
           <span className="leg__arrow">&#8594;</span>
@@ -46,7 +47,7 @@ const Leg = (props) => {
 
       <div className="leg__company">Рейс выполняет: {uniqCompamies.join(`, `)}</div>
     </li>
-  );
+  ) : ``;
 };
 
 export default Leg;

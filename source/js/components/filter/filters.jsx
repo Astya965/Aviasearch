@@ -37,7 +37,7 @@ const Filters = (props) => {
                 <label className="filter__label" htmlFor="lowest-price">От</label>
                 <input className="filter__input" id="lowest-price" type="nubmer" name="lowest-price" placeholder="0" onChange={onMinPriceFilterClick} />
                 <label className="filter__label" htmlFor="highest-price">До</label>
-                <input className="filter__input" id="highest-price" type="nubmer" name="highest-price" placeholder="1000000" onBlur={onMaxPriceFilterClick} />
+                <input className="filter__input" id="highest-price" type="nubmer" name="highest-price" placeholder="1000000" onChange={onMaxPriceFilterClick} />
             </div>
           </li>
           <li className="filters__item filter">
