@@ -7,7 +7,7 @@ const useSearch = () => {
   const maxFlightsCount = useSelector(getFlights).length;
   const offers = useSelector(getOffers);
   const currentSort = useSelector(getCurrentSort);
-  const offest = useSelector(getOffest);
+  const offset = useSelector(getOffest);
   const dispatch = useDispatch();
 
 
@@ -16,10 +16,10 @@ const useSearch = () => {
   };
 
   const onMoreButtonClick = () => {
-    if (maxFlightsCount >= offest + OFFSET) {
+    if (maxFlightsCount >= offset + OFFSET) {
       dispatch(ActionCreator.incrementOffset(OFFSET));
     } else {
-      dispatch(ActionCreator.incrementOffset(maxFlightsCount - offest));
+      dispatch(ActionCreator.incrementOffset(maxFlightsCount - offset));
     }
   };
 
@@ -28,6 +28,7 @@ const useSearch = () => {
     maxFlightsCount,
     offers,
     currentSort,
+    offset,
     onSortOptionClick,
     onMoreButtonClick
   };

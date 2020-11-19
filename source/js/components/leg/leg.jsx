@@ -18,12 +18,14 @@ const Leg = (props) => {
   return segments.length > 0 ? (
     <li className="legs__item leg">
       <div className="leg__route">
-        {segments[0].departureCity ? segments[0].departureCity.caption : ``}, {segments[0].departureAirport.caption}
+        {segments[0].departureCity ? segments[0].departureCity.caption : ``},
+        {segments[0].departureAirport ? segments[0].departureAirport.caption : ``}
         <span className="leg__aeroportID">
           ({segments[0].departureAirport.uid})
           <span className="leg__arrow">&#8594;</span>
         </span>
-        {segments[segments.length - 1].arrivalCity.caption}, {segments[segments.length - 1].arrivalAirport.caption}
+        {segments[segments.length - 1].arrivalCity ? segments[segments.length - 1].arrivalCity.caption : ``},
+        {segments[segments.length - 1].arrivalAirport ? segments[segments.length - 1].arrivalAirport.caption : ``}
         <span className="leg__aeroportID">
           ({segments[segments.length - 1].arrivalAirport.uid})
         </span>
