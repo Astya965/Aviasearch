@@ -2,6 +2,8 @@ import React from "react";
 import * as uniq from "lodash.uniq";
 
 import {formatHoursMinutes, formatDayMonth, getDistanceFull} from "../../utils/date.js";
+import {TRANSFERS_MAP} from "../../utils/constants.js";
+import {connectNounAndNumral} from "../../utils/utils.js";
 
 const Leg = (props) => {
   const {segments} = props.info;
@@ -18,13 +20,13 @@ const Leg = (props) => {
   return segments.length > 0 ? (
     <li className="legs__item leg">
       <div className="leg__route">
-        {segments[0].departureCity ? segments[0].departureCity.caption : ``},
+        {segments[0].departureCity ? segments[0].departureCity.caption : ``},&#160;
         {segments[0].departureAirport ? segments[0].departureAirport.caption : ``}
         <span className="leg__aeroportID">
           ({segments[0].departureAirport.uid})
           <span className="leg__arrow">&#8594;</span>
         </span>
-        {segments[segments.length - 1].arrivalCity ? segments[segments.length - 1].arrivalCity.caption : ``},
+        {segments[segments.length - 1].arrivalCity ? segments[segments.length - 1].arrivalCity.caption : ``},&#160;
         {segments[segments.length - 1].arrivalAirport ? segments[segments.length - 1].arrivalAirport.caption : ``}
         <span className="leg__aeroportID">
           ({segments[segments.length - 1].arrivalAirport.uid})
@@ -43,10 +45,13 @@ const Leg = (props) => {
         </div>
       </div>
 
-      <div className="leg__transfers"><span className="leg__transfers-text">{segments.length > 0 ? `${segments.length -1} пересадка`: `Прямой рейс`}</span></div>
-      {/* Тоже словарь сюда */}
+      <div className="leg__transfers">
+        <span className="leg__transfers-text">
+          {segments.length > 1 ? `${segments.length -1} ${connectNounAndNumral(segments.length - 1, TRANSFERS_MAP)}`: `Прямой рейс`}
+        </span>
+      </div>
 
-      <div className="leg__company">Рейс выполняет: {uniqCompamies.join(`, `)}</div>
+      <div className="leg__company">Рейс {uniqCompamies.length > 1 ? `выполняют` : `выполняет`}: {uniqCompamies.join(`, `)}</div>
     </li>
   ) : ``;
 };

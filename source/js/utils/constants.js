@@ -20,3 +20,25 @@ export const SORTS = [
     text: `по времени в пути`,
   },
 ];
+
+export const DAYS_MAP = {
+  one: `день`,
+  few: `дня`,
+  other: `дней`,
+};
+
+export const ADULTS_MAP = {
+  one: `взрослого пассажира`,
+  many: `взрослых пассажиров`,
+};
+
+export const CHILDREN_MAP = {
+  one: `ребёнка`,
+  many: `детей`,
+};
+
+export const TRANSFERS_MAP = {
+  one: `пересадка`,
+  few: `пересадки`,
+  other: `пересадок`,
+};

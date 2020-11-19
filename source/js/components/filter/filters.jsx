@@ -18,7 +18,6 @@ const Filters = (props) => {
         <h3 className="filters__title">Фильтровать</h3>
         <ul className="filters__list">
           <li className="filters__item filter">
-            {/* Потом реализовать через map. не забыть добавить словарь для чисел и склоненний */}
             <ul className="filter__list">
               <li className="filter__option">
                 <input className="filter__input filter__input--segments" id="segmet-1" type="checkbox" name="segments-count" value="1" defaultChecked
@@ -42,7 +41,6 @@ const Filters = (props) => {
             </div>
           </li>
           <li className="filters__item filter">
-            {/* Потом реализовать через map. не забыть добавить словарь для чисел и склоненний */}
             <h4 className="filter__title">Авиакопании</h4>
             <ul className="filter__list">
               {allUniqFlightPrices.map((option) => {

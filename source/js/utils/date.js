@@ -1,5 +1,7 @@
 import format from 'date-fns/format';
-import intervalToDuration from 'date-fns/intervalToDuration'
+import intervalToDuration from 'date-fns/intervalToDuration';
+import {DAYS_MAP} from "./constants.js";
+import {connectNounAndNumral} from "./utils.js";
 
 const MONTHES = [`янв.`, `фев.`, ` мрт.`, `апр.`, `мая`, `июн.`, `июл.`, `авг.`, `сен.`, `окт.`, `нбр.`, `дек.`];
 const DAYS_OF_WEEK = [`пн`, `вт`, `ср`, `чт`, `пт`, `сб`, `вс`];
@@ -34,6 +36,6 @@ export const getDistanceFull = (departure, arrival) => {
     end: arrival
   });
 
-  return `${duration.days > 0 ? duration.days + ` день` : ``} ${duration.hours > 0 ? duration.hours + ` ч` : ``} ${duration.minutes} мин`;
-  // Тут тоже неплохо завести словарь
+  return `${duration.days > 0 ? duration.days + ` ${connectNounAndNumral(duration.days, DAYS_MAP)}` : ``}
+    ${duration.hours > 0 ? duration.hours + ` ч` : ``} ${duration.minutes} мин`;
 };

@@ -1,6 +1,7 @@
 import React from "react";
 
 import Leg from "../leg/leg.jsx";
+import {ADULTS_MAP, CHILDREN_MAP} from "../../utils/constants.js";
 
 const Flight = (props) => {
     const {flight} = props;
@@ -17,11 +18,12 @@ const Flight = (props) => {
             {passengerPrices.map((type) => {
               return (
               <p className="flight__passengers" key={`passenger-${type.passengerType.uid}`}>
-                Стоимость для {type.passengerCount} {type.passengerType.uid === `ADULT` ? `взрослого пассажира` : `ребёнка`}
+                Стоимость для {type.passengerCount}
+                {type.passengerType.uid === `ADULT` ? ` ${type.passengerCount === 1 ? ADULTS_MAP.one : ADULTS_MAP.many}`
+                : ` ${type.passengerCount === 1 ? CHILDREN_MAP.one : CHILDREN_MAP.many}`}
               </p>
               );
             })}
-            {/* Сюда тоже добавить словарь*/}
           </div>
         </header>
 
@@ -40,5 +42,3 @@ const Flight = (props) => {
 };
 
 export default Flight;
-
-// Подумать про разбитие на более мелкие компоненты
