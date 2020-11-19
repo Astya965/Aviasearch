@@ -6,7 +6,7 @@ const DAYS_OF_WEEK = [`пн`, `вт`, `ср`, `чт`, `пт`, `сб`, `вс`];
 
 /**
  * Получение времени на основе даты в формате HH:mm
- * @param {Number} date - Дата в unix формате
+ * @param {Date} date - Дата в unix формате
  * @return {String} Время события в формате HH:mm
  */
 export const formatHoursMinutes = (date) => {
@@ -15,13 +15,19 @@ export const formatHoursMinutes = (date) => {
 
 /**
  * Получение времени на основе даты в формате D MMM ddd на русском языке
- * @param {Number} date - Дата в unix формате
+ * @param {Date} date - Дата в unix формате
  * @return {String} Дата события в формате D MMM ddd на русском языке
  */
 export const formatDayMonth = (date) => {
   return `${format(date, `d`)} ${MONTHES[format(date, `M`)]} ${DAYS_OF_WEEK[format(date, `i`)]}`;
 };
 
+/**
+ * Вычисление длительности пути в формате d h m на русском языке
+ * @param {Date} departure - Дата отправления в unix формате
+ * @param {Date} arrival - Дата прибытия в unix формате
+ * @return {String} Длительность пути в формате d h m на русском языке
+ */
 export const getDistanceFull = (departure, arrival) => {
   const duration = intervalToDuration({
     start: departure,
