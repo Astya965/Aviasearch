@@ -5,7 +5,6 @@ import {formatHoursMinutes, formatDayMonth, getDistanceFull} from "../../utils/d
 
 const Leg = (props) => {
   const {segments} = props.info;
-  console.log(segments);
 
   const departureDate = new Date(segments[0].departureDate);
   const arrivalDate = new Date(segments[segments.length - 1].arrivalDate);

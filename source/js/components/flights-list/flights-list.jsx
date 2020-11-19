@@ -6,7 +6,7 @@ import useSearch from "../../hooks/useSearch.js";
 const FlightsList = (props) => {
   const {flights} = props;
   const {offset, maxFlightsCount, onMoreButtonClick} = useSearch();
-  console.log(flights)
+
   return flights.length >= 0 ? (
     <section className="main__flights flights">
       <ul className="flights__list">

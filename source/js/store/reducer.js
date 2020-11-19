@@ -1,5 +1,6 @@
 import {createSelector} from "reselect";
 import {SortType, OFFSET} from "../utils/constants.js";
+import * as uniq from "lodash.uniq";
 
 const initialState = {
   flights: [],
@@ -7,8 +8,10 @@ const initialState = {
   currentSort: SortType.TO_HIGH_PRICE,
   maxPriceFilter: null,
   minPriceFilter: null,
-  segmentsCountFilter: null,
-  companiesFilter: null
+  filters: {
+    segmentsNumberFilter: [],
+    carriersFilter: []
+  }
 };
 
 const ActionType = {
@@ -18,6 +21,7 @@ const ActionType = {
   SET_CURRENT_SORT: `SET_CURRENT_SORT`,
   SET_MAX_PRICE_FILTER: `SET_MAX_PRICE_FILTER`,
   SET_MIN_PRICE_FILTER: `SET_MIX_PRICE_FILTER`,
+  SET_FILTERS: `SET_FILTERS`,
 };
 
 export const ActionCreator = {
@@ -50,6 +54,11 @@ export const ActionCreator = {
     type: ActionType.SET_MIN_PRICE_FILTER,
     payload: minPrice,
   }),
+
+  setFilters: (filters) => ({
+    type: ActionType.SET_FILTERS,
+    payload: filters,
+  }),
 };
 
 export const reducer = (state = initialState, action) => {
@@ -69,8 +78,14 @@ export const reducer = (state = initialState, action) => {
     case ActionType.SET_MAX_PRICE_FILTER:
       return {...state, maxPriceFilter: action.payload};
 
-      case ActionType.SET_MIN_PRICE_FILTER:
+    case ActionType.SET_MIN_PRICE_FILTER:
       return {...state, minPriceFilter: action.payload};
+
+    case ActionType.SET_FILTERS:
+      return {...state, filters: {
+        ...state.filters,
+        ...action.payload,
+      }};
 
     default: return state;
   }
@@ -92,6 +107,10 @@ export const getMinPriceFilter = (state) => {
   return state.minPriceFilter;
 };
 
+export const getFilters = (state) => {
+  return state.filters;
+};
+
 export const getOffest = (state) => {
   return state.offset;
 }
@@ -107,9 +126,29 @@ export const getCurrentFlights = createSelector(
   getCurrentSort,
   getMinPriceFilter,
   getMaxPriceFilter,
-  (flights, offset, currentSort, minPrice, maxPrice) => {
+  getFilters,
+  (flights, offset, currentSort, minPrice, maxPrice, filters) => {
 
     let result = flights.slice();
+
+    if (filters.segmentsNumberFilter.length > 0) {
+      result = result.filter((item) => {
+        const transfersArray = item.flight.legs.map((leg) => leg.segments.length - 1);
+        return filters.segmentsNumberFilter.reduce((flag, filter) => {
+          return flag & !transfersArray.includes(+filter)}, true);
+      });
+    }
+
+    if (filters.carriersFilter.length > 0) {
+      result = result.filter((item) => {
+        const carriersArray = item.flight.legs.reduce((array, leg) =>
+          array.concat(leg.segments.map((segment) => segment.airline.uid)), []);
+        const uniqCarriers = uniq(carriersArray);
+
+        return filters.carriersFilter.reduce((flag, filter) => {
+          return flag & !uniqCarriers.includes(filter)}, true);
+      });
+    }
 
     if (minPrice > 0) {
       result = result.filter((item) => {

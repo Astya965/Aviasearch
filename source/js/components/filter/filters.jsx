@@ -11,7 +11,7 @@ const Filters = (props) => {
     });
     const allUniqFlightPrices = uniqBy(allFlightPrices, `carrier.uid`);
 
-    const {onMaxPriceFilterClick, onMinPriceFilterClick} = useFilter();
+    const {onMaxPriceFilterClick, onMinPriceFilterClick, onCheckboxFilterClick} = useFilter();
 
     return (
       <section className="settings_item filters">
@@ -21,12 +21,13 @@ const Filters = (props) => {
             {/* Потом реализовать через map. не забыть добавить словарь для чисел и склоненний */}
             <ul className="filter__list">
               <li className="filter__option">
-                <input className="filter__input" id="segmet-1" type="checkbox" name="segments-count" value="1" defaultChecked
-                  />
+                <input className="filter__input filter__input--segments" id="segmet-1" type="checkbox" name="segments-count" value="1" defaultChecked
+                  onChange={() => onCheckboxFilterClick(`filter__input--segments`, `segmentsNumberFilter`)} />
                 <label className="filter__label" htmlFor="segmet-1"> - 1 пересадка</label>
               </li>
               <li className="filter__option">
-                <input className="filter__input" id="segmet-0" type="checkbox" name="segments-count" value="0" defaultChecked/>
+                <input className="filter__input filter__input--segments" id="segmet-0" type="checkbox" name="segments-count" value="0" defaultChecked
+                  onChange={() => onCheckboxFilterClick(`filter__input--segments`, `segmentsNumberFilter`)} />
                 <label className="filter__label" htmlFor="segmet-0"> - без пересадок</label>
               </li>
             </ul>
@@ -47,7 +48,8 @@ const Filters = (props) => {
               {allUniqFlightPrices.map((option) => {
                 return (
                   <li className="filter__option" key={option.carrier.uid}>
-                    <input className="filter__input" id={`airline-${option.carrier.caption}`} type="checkbox" name="airline" value={option.carrier.uid} defaultChecked/>
+                    <input className="filter__input filter__input--carrier" id={`airline-${option.carrier.caption}`} type="checkbox" name="airline" value={option.carrier.uid} defaultChecked
+                      onChange={() => onCheckboxFilterClick(`filter__input--carrier`, `carriersFilter`)} />
                     <label className="filter__label" htmlFor={`airline-${option.carrier.caption}`}>
                       <div className="filter__company">
                          - {option.carrier.caption.length > 20 ? `${option.carrier.caption.slice(0, 12)}...` : option.carrier.caption}
