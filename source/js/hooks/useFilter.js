@@ -1,17 +1,15 @@
-import {useSelector, useDispatch} from "react-redux";
-import {ActionCreator, getMaxPriceFilter, getMinPriceFilter} from "../store/reducer.js";
+import {useDispatch} from "react-redux";
+import {ActionCreator} from "../store/reducer.js";
 
 const useFilter = () => {
-  const maxPrice = useSelector(getMaxPriceFilter);
-  const minPrice = useSelector(getMinPriceFilter);
   const dispatch = useDispatch();
 
   const onMaxPriceFilterClick = (evt) => {
-    dispatch(ActionCreator.setMaxPriceFilter(evt.target.value));
+    dispatch(ActionCreator.setFilters({maxPriceFilter: evt.target.value}));
   };
 
   const onMinPriceFilterClick = (evt) => {
-    dispatch(ActionCreator.setMinPriceFilter(evt.target.value));
+    dispatch(ActionCreator.setFilters({minPriceFilter: evt.target.value}));
   };
 
   const onCheckboxFilterClick = (elemClass, filterType) => {
@@ -21,8 +19,6 @@ const useFilter = () => {
   };
 
   return {
-    maxPrice,
-    minPrice,
     onMaxPriceFilterClick,
     onMinPriceFilterClick,
     onCheckboxFilterClick

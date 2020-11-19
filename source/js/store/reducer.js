@@ -6,9 +6,9 @@ const initialState = {
   flights: [],
   offset: OFFSET,
   currentSort: SortType.TO_HIGH_PRICE,
-  maxPriceFilter: null,
-  minPriceFilter: null,
   filters: {
+    maxPriceFilter: null,
+    minPriceFilter: null,
     segmentsNumberFilter: [],
     carriersFilter: []
   }
@@ -19,8 +19,6 @@ const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   INCREMENT_OFFSET: `INCREMENT_OFFSET`,
   SET_CURRENT_SORT: `SET_CURRENT_SORT`,
-  SET_MAX_PRICE_FILTER: `SET_MAX_PRICE_FILTER`,
-  SET_MIN_PRICE_FILTER: `SET_MIX_PRICE_FILTER`,
   SET_FILTERS: `SET_FILTERS`,
 };
 
@@ -45,16 +43,6 @@ export const ActionCreator = {
     payload: offset,
   }),
 
-  setMaxPriceFilter: (maxPrice) => ({
-    type: ActionType.SET_MAX_PRICE_FILTER,
-    payload: maxPrice,
-  }),
-
-  setMinPriceFilter: (minPrice) => ({
-    type: ActionType.SET_MIN_PRICE_FILTER,
-    payload: minPrice,
-  }),
-
   setFilters: (filters) => ({
     type: ActionType.SET_FILTERS,
     payload: filters,
@@ -75,12 +63,6 @@ export const reducer = (state = initialState, action) => {
     case ActionType.SET_CURRENT_SORT:
       return {...state, currentSort: action.payload};
 
-    case ActionType.SET_MAX_PRICE_FILTER:
-      return {...state, maxPriceFilter: action.payload};
-
-    case ActionType.SET_MIN_PRICE_FILTER:
-      return {...state, minPriceFilter: action.payload};
-
     case ActionType.SET_FILTERS:
       return {...state, filters: {
         ...state.filters,
@@ -97,14 +79,6 @@ export const getOffers = (state) => {
 
 export const getCurrentSort = (state) => {
   return state.currentSort;
-};
-
-export const getMaxPriceFilter = (state) => {
-  return state.maxPriceFilter;
-};
-
-export const getMinPriceFilter = (state) => {
-  return state.minPriceFilter;
 };
 
 export const getFilters = (state) => {
@@ -124,10 +98,8 @@ export const getCurrentFlights = createSelector(
   getFlights,
   getOffest,
   getCurrentSort,
-  getMinPriceFilter,
-  getMaxPriceFilter,
   getFilters,
-  (flights, offset, currentSort, minPrice, maxPrice, filters) => {
+  (flights, offset, currentSort, filters) => {
 
     let result = flights.slice();
 
@@ -150,15 +122,15 @@ export const getCurrentFlights = createSelector(
       });
     }
 
-    if (minPrice > 0) {
+    if (filters.minPriceFilter > 0) {
       result = result.filter((item) => {
-        return +item.flight.price.total.amount >= +minPrice;
+        return +item.flight.price.total.amount >= +filters.minPriceFilter;
       });
     }
 
-    if (maxPrice > 0) {
+    if (filters.maxPriceFilter > 0) {
       result = result.filter((item) => {
-        return +item.flight.price.total.amount <= +maxPrice;
+        return +item.flight.price.total.amount <= +filters.maxPriceFilter;
       });
     }
 
